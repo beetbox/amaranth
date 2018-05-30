@@ -1,14 +1,32 @@
 extern crate clap;
 extern crate reqwest;
 extern crate url;
+#[macro_use]
+extern crate serde_derive;
 
 use url::Url;
+
+#[derive(Deserialize)]
+struct Tracks {
+    tracks: Vec<Track>,
+}
+
+#[derive(Deserialize)]
+struct Track {
+    path: String,
+    artist: String,
+    title: String,
+    album: String,
+}
 
 fn cmd_list(endpoint: &str, album: bool) {
     let base_url = Url::parse(endpoint).unwrap();
     let tracks_url = base_url.join("/aura/tracks").unwrap();
-    let res = reqwest::get(tracks_url.as_str()).unwrap().text().unwrap();
-    println!("{} {}", album, res);
+    let tracks: Tracks = reqwest::get(tracks_url.as_str()).unwrap()
+        .json().unwrap();
+    for track in tracks.tracks {
+        println!("{} - {} - {}", track.artist, track.album, track.title);
+    }
 }
 
 fn main() {
