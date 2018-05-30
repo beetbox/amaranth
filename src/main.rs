@@ -24,9 +24,13 @@ fn main() {
     let matches = app.get_matches();
     let url = matches.value_of("url").unwrap();
     if let Some(matches) = matches.subcommand_matches("list") {
-        let query: Vec<&str> = matches.values_of("query").unwrap().collect();
         let album = matches.is_present("album");
-        println!("list! {} {} {}", url, query.len(), album);
+        let num_parts = if let Some(query_parts) = matches.values_of("query") {
+            query_parts.count()
+        } else {
+            0
+        };
+        println!("list! {} {} {}", url, num_parts, album);
     } else {
         assert!(false);
     }
