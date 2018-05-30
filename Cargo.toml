@@ -1,0 +1,8 @@
+[package]
+name = "amaranth"
+version = "0.1.0"
+authors = ["Adrian Sampson <adrian@radbox.org>"]
+
+[dependencies]
+reqwest = "^0.8.5"
+clap = "^2.31.2"
