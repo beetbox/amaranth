@@ -1,4 +1,10 @@
 extern crate clap;
+extern crate reqwest;
+
+fn cmd_list(url: &str, album: bool) {
+    let res = reqwest::get(url).unwrap().text().unwrap();
+    println!("{} {}", album, res);
+}
 
 fn main() {
     let list = clap::SubCommand::with_name("list")
@@ -31,6 +37,7 @@ fn main() {
             0
         };
         println!("list! {} {} {}", url, num_parts, album);
+        cmd_list(url, album);
     } else {
         assert!(false);
     }
