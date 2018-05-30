@@ -10,3 +10,4 @@ path = "src/main.rs"
 [dependencies]
 reqwest = "^0.8.5"
 clap = "^2.31.2"
+url = "^1.7.0"

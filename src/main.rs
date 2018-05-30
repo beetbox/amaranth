@@ -1,8 +1,13 @@
 extern crate clap;
 extern crate reqwest;
+extern crate url;
 
-fn cmd_list(url: &str, album: bool) {
-    let res = reqwest::get(url).unwrap().text().unwrap();
+use url::Url;
+
+fn cmd_list(endpoint: &str, album: bool) {
+    let base_url = Url::parse(endpoint).unwrap();
+    let tracks_url = base_url.join("/aura/tracks").unwrap();
+    let res = reqwest::get(tracks_url.as_str()).unwrap().text().unwrap();
     println!("{} {}", album, res);
 }
 
